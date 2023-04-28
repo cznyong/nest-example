@@ -1,0 +1,55 @@
+import { Body, Controller, Post, Get, Param, Req, Res } from '@nestjs/common';
+import { CreateUserDto } from './dto/users.create-user.dto'
+import { UserService } from './sevice/user.service';
+import User from './entity/user.entity';
+
+
+@Controller('users')
+export class UsersController {
+
+    constructor(private readonly userService: UserService) { }
+
+    @Get("/getHello")
+    getHello(): string {
+      return this.userService.getHello();
+    }
+
+    @Post()
+    async createUser(@Body() dto: CreateUserDto): Promise<void> {
+        console.log(dto);
+        return;
+    }
+
+    @Get()
+    findAll(): string {
+        return 'This action returns all cats';
+    }
+
+    @Get('/test')
+    test(): Array<String> {
+        return ['test', 'test', 'test'];
+    }
+
+    @Get('/test2')
+    test2(): Array<String> {
+        return ['test2', 'test', 'test'];
+    }
+    @Get('/findAllTest')
+    findAllTest(@Req() request: CreateUserDto): string {
+        return 'This action returns all cats';
+    }
+
+    @Post('/findAllTest')
+    async ddd(@Req() request: CreateUserDto, @Res() response: Response) {
+        return response.json.apply({
+            request
+        });
+    }
+
+    @Get('/:id')
+    async getUserInfo(@Param('id') userId: string): Promise<User> {
+        console.log(userId);
+        return;
+    }
+
+}
