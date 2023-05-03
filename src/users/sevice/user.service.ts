@@ -17,7 +17,7 @@ export class UserService {
     }
 
     async findOne(id: number): Promise<User | undefined> {
-        return this.userRepository.findOneById(id);
+        return this.userRepository.findOneBy({ id });
     }
 
     async findOneByEmailAndPassword(email:string){
@@ -25,9 +25,8 @@ export class UserService {
             where : {
                 email : email,
             }
-        })
+       })
     }
-
 
     async create(user:CreateUserDto){
         const isUser = await this.userRepository.findOne({ 

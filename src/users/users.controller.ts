@@ -2,8 +2,9 @@ import { Body, Controller, Post, Get, Param, Req, Res, Delete, Put } from '@nest
 import { CreateUserDto } from './dto/users.create-user.dto'
 import { UserService } from './sevice/user.service';
 import User from './entity/user.entity';
+import { ApiTags, ApiOperation, ApiResponse, ApiCreatedResponse } from '@nestjs/swagger';
 
-
+@ApiTags('유저 API')
 @Controller('users')
 export class UsersController {
 
@@ -19,6 +20,8 @@ export class UsersController {
         return this.userService.findOne(id);
     }
 
+    @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
+    @ApiCreatedResponse({ description: '유저를 생성한다.', type: CreateUserDto })
     @Post()
     createUser(@Body() user:CreateUserDto){
         return this.userService.create(user);
